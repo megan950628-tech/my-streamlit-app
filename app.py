@@ -65,6 +65,22 @@ race = st.selectbox(
     options=["請選擇", "人", "被書砸死的行屍走肉", "學分的狗", "水課溺水的魚", "一坨爛泥", "無魂趕屍人", "期末靈魂出竅中", "其他神祕物種"]
 )
 
+# 種族專屬評價對照字典
+race_evaluations = {
+    "人": "還有高手?",
+    "被書砸死的行屍走肉": "一路走好",
+    "學分的狗": "汪汪",
+    "水課溺水的魚": "教授，撈撈",
+    "一坨爛泥": "來台回收車收了我",
+    "無魂趕屍人": "快跑",
+    "期末靈魂出竅中": "那還說啥了，我直接跳了",
+    "其他神祕物種": "有待發現......"
+}
+
+# 即時顯示種族評價
+if race != "請選擇":
+    st.caption(f"🧬 物種評語：{race_evaluations[race]}")
+
 st.markdown("---")
 st.subheader("📝 意見回饋與評分")
 
@@ -138,6 +154,7 @@ if submitted:
             "性別": gender,
             "科系": department,
             "種族": race,
+            "種族評價": race_evaluations[race],
             "滿意度": satisfaction,
             "意見回饋": comments if comments else "無"
         }
@@ -160,7 +177,7 @@ if submitted:
         st.write(f"- **姓名：** {name}")
         st.write(f"- **性別：** {gender}")
         st.write(f"- **科系：** {department}")
-        st.write(f"- **物種/種族：** {race}")
+        st.write(f"- **物種/種族：** {race} （評語：{race_evaluations[race]}）")
         st.write(f"- **滿意度：** {satisfaction} 分")
         if comments:
             st.write(f"- **意見回饋：** {comments}")
