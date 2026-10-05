@@ -32,7 +32,6 @@ gender = st.sidebar.selectbox(
     options=["不願透露", "男", "女", "多元性別"]
 )
 
-# 依要求新增「被書砸死的行屍走肉」
 race = st.sidebar.selectbox(
     "生物/物種型態 (種族)",
     options=[
@@ -47,28 +46,31 @@ race = st.sidebar.selectbox(
     ]
 )
 
-# 使用 st.form 來建立主表單區塊
+# 💡 將滿意度滑桿移到 Form 外面，這樣拖動時才能即時觸發畫面更新（Rerun）
+st.subheader("📊 課程滿意度評分")
+satisfaction = st.slider(
+    "請調整您的滿意度 (1 = 非常不滿意，5 = 非常滿意)",
+    min_value=1,
+    max_value=5,
+    value=5
+)
+
+# 即時顯示對應的小表情與狀態提示
+satisfaction_hints = {
+    1: "🥵 瀕死邊緣，隨時準備登出人生",
+    2: "🫠 快撐不住了，急需珍奶續命",
+    3: "🫥 普普通通，靈魂正在放空",
+    4: "😊 還算充實，學到不少東西",
+    5: "🤩 太神啦！直接原地滿血復活"
+}
+st.info(f"目前狀態預測：{satisfaction_hints[satisfaction]}")
+
+st.markdown("---")
+
+# 使用 st.form 來包覆需要點擊按鈕才送出的文字輸入與意見回饋
 with st.form("feedback_form"):
     # 1. 姓名 文字輸入欄位
     name = st.text_input("姓名")
-    
-    # 3. 課程滿意度 1~5 分
-    satisfaction = st.slider(
-        "課程滿意度 (1 = 非常不滿意，5 = 非常滿意)",
-        min_value=1,
-        max_value=5,
-        value=5
-    )
-    
-    # 💡 趣味新功能：根據滿意度即時顯示的小表情或小評語提示
-    satisfaction_hints = {
-        1: "🥵 這世界怎麼還不爆炸",
-        2: "🫠 教授我是小丑放過我",
-        3: "🫥 還能活",
-        4: "😊 還算充實，學到不少東西",
-        5: "🤩 太神啦！直接原地復活"
-    }
-    st.info(f"目前狀態預測：{satisfaction_hints[satisfaction]}")
     
     # 4. 意見回饋 文字輸入區
     comments = st.text_area("意見回饋 (選填)")
@@ -83,7 +85,7 @@ with st.form("feedback_form"):
         else:
             st.success("感謝您的回饋！")
             
-            # 💡 趣味新功能：隨機產出一句期末金句
+            # 隨機產出一句期末金句
             funny_quotes = [
                 "「雖然這堂課很累，但我的人生本來就是一場笑話。」",
                 "「只要我不尷尬，尷尬的就是期末報告。」",
@@ -105,4 +107,4 @@ with st.form("feedback_form"):
                 st.write(f"- **意見回饋：** {comments}")
                 
             st.markdown("---")
-            st.markdown(f"💡 **今日student語錄：** *{selected_quote}*")
+            st.markdown(f"💡 **今日語錄：** *{selected_quote}*")
