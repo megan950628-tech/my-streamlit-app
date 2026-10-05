@@ -1,4 +1,5 @@
 import streamlit as st
+import random
 
 # 設定網頁標題與寬度風格
 st.set_page_config(page_title="課程回饋表單", page_icon="📝", layout="centered")
@@ -31,10 +32,12 @@ gender = st.sidebar.selectbox(
     options=["不願透露", "男", "女", "多元性別"]
 )
 
+# 依要求新增「被書砸死的行屍走肉」
 race = st.sidebar.selectbox(
     "生物/物種型態 (種族)",
     options=[
         "人",
+        "被書砸死的行屍走肉",
         "學分的狗",
         "水課溺水的魚",
         "一坨爛泥",
@@ -57,6 +60,16 @@ with st.form("feedback_form"):
         value=5
     )
     
+    # 💡 趣味新功能：根據滿意度即時顯示的小表情或小評語提示
+    satisfaction_hints = {
+        1: "🥵 這世界怎麼還不爆炸",
+        2: "🫠 教授我是小丑放過我",
+        3: "🫥 還能活",
+        4: "😊 還算充實，學到不少東西",
+        5: "🤩 太神啦！直接原地復活"
+    }
+    st.info(f"目前狀態預測：{satisfaction_hints[satisfaction]}")
+    
     # 4. 意見回饋 文字輸入區
     comments = st.text_area("意見回饋 (選填)")
     
@@ -70,6 +83,16 @@ with st.form("feedback_form"):
         else:
             st.success("感謝您的回饋！")
             
+            # 💡 趣味新功能：隨機產出一句期末金句
+            funny_quotes = [
+                "「雖然這堂課很累，但我的人生本來就是一場笑話。」",
+                "「只要我不尷尬，尷尬的就是期末報告。」",
+                "「今天也是努力在延畢邊緣仰式游泳的一天呢！」",
+                "「知識有進到腦子裡嗎？沒有，它跟我的髮際線一起走了。」",
+                "「感謝老師的授課，讓我成功見證了奇蹟（活到現在）。」"
+            ]
+            selected_quote = random.choice(funny_quotes)
+            
             # 顯示填寫內容摘要
             st.markdown("---")
             st.subheader("📝 您的填寫內容摘要：")
@@ -80,3 +103,6 @@ with st.form("feedback_form"):
             st.write(f"- **滿意度：** {satisfaction} 分")
             if comments:
                 st.write(f"- **意見回饋：** {comments}")
+                
+            st.markdown("---")
+            st.markdown(f"💡 **今日student語錄：** *{selected_quote}*")
