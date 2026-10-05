@@ -14,14 +14,14 @@ if "feedback_history" not in st.session_state:
 st.title("📋 課程回饋表單")
 st.markdown("""
 歡迎填寫本學期的課程回饋表單！您的寶貴意見將有助於我們持續改善教學品質與課程內容。  
-請先至左側側邊欄選擇您的基本資訊，並在下方填寫您的體驗與回饋，謝謝您的配合！
+請在下方依序填寫您的基本資訊與課程回饋，謝謝您的配合！
 """)
 st.markdown("---")
 
-# 側邊欄基本資訊設定（科系、性別、種族）
-st.sidebar.header("📌 基本資訊設定")
+# 📌 將原本在 Sidebar 的選單移至中間主畫面
+st.subheader("📌 基本資訊設定")
 
-department = st.sidebar.selectbox(
+department = st.selectbox(
     "所屬科系",
     options=[
         "資訊工程系", 
@@ -33,13 +33,12 @@ department = st.sidebar.selectbox(
     ]
 )
 
-# 性別選項（已加入「沃爾瑪購物袋」並放在多元性別前面）
-gender = st.sidebar.selectbox(
+gender = st.selectbox(
     "性別",
     options=["不願透露", "男", "女", "沃爾瑪購物袋", "多元性別"]
 )
 
-race = st.sidebar.selectbox(
+race = st.selectbox(
     "生物/物種型態 (種族)",
     options=[
         "人",
@@ -53,10 +52,13 @@ race = st.sidebar.selectbox(
     ]
 )
 
+st.markdown("---")
+st.subheader("📝 意見回饋與評分")
+
 # 1. 姓名 文字輸入欄位
 name = st.text_input("姓名")
 
-# 3. 課程滿意度 1~5 分（移出 form，拖動時即可即時更新）
+# 3. 課程滿意度 1~5 分（拖動時即可即時更新）
 satisfaction = st.slider(
     "課程滿意度 (1 = 非常不滿意，5 = 非常滿意)",
     min_value=1,
@@ -84,7 +86,7 @@ submitted = st.button("送出")
 # 檢查與送出後反應
 if submitted:
     if not name.strip():
-        st.error("⚠️ 警告：請填寫您的姓名後再送出！")
+        st.error("⚠️️ 警告：請填寫您的姓名後再送出！")
     else:
         st.success("感謝您的回饋！")
         
